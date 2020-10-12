@@ -12,11 +12,13 @@ class App extends Component {
     super(props);
     this.config = new Configuration();
     this.movieService = new MovieService();
+
     this.onSelect = this.onSelect.bind(this);
     this.onNewMovie = this.onNewMovie.bind(this);
     this.onCancel = this.onCancel.bind(this);
     this.onCreateMovie = this.onCreateMovie.bind(this);
     this.onDeleteMovie = this.onDeleteMovie.bind(this);
+
     this.state = {
       showDetails: false,
       selectedMovie: null,
@@ -35,23 +37,23 @@ class App extends Component {
     const newMovie = this.state.newMovie;
 
     const listMovies = this.state.movies.map((movie) =>
-      <li key={movie.name} onClick={() => this.onSelect(movie.name)}>
-         <span className="movie-name">{movie.name}</span>
+      <li key={movie.name} onClick={() => this.onSelect(movie)}>
+         <span className="movie-name">{movie.name}</span>&nbsp;|&nbsp; {movie.year}
       </li>
     );
 
     return (
       <div className="App">
-        <Movies movies={this.state.movies} />
+        <center><h1>MoBro - The Greatest Movie Browser Ever</h1></center>
+        <br/>
+        <button type="button" name="button" onClick={() => this.onNewMovie()}>Add movie</button>
         <br/>
         <ul className="movies">
            {listMovies}
         </ul>
         <br/>
-        <button type="button" name="button" onClick={() => this.onNewMovie()}>Add movie</button>
-        <br/>
         {newMovie && <NewMovie onSubmit={this.onCreateMovie} onCancel={this.onCancel}/>}
-        {showDetails && selectedMovie && <MovieDetails item={selectedMovie} onDelete={this.onDeleteMovie} />}
+        {showDetails && selectedMovie && <MovieDetails movie={selectedMovie} onDelete={this.onDeleteMovie} />}
       </div>
     );
   }
@@ -62,18 +64,15 @@ class App extends Component {
                 .then((data) => {
                     this.setState({ movies: data })
                 })
-                .catch(console.log)
+                .catch(console.log);
   }
 
-  onSelect(movieName) {
+  onSelect(movie) {
       this.clearState();
-      this.movieService.getMovie(movieName).then(movie => {
-        this.setState({
-            showDetails: true,
-            selectedMovie: movie
-          });
-        }
-      );
+      this.setState({
+        showDetails: true,
+        selectedMovie: movie
+      });
     }
 
   onCancel() {
@@ -89,15 +88,15 @@ class App extends Component {
 
   onCreateMovie(newMovie) {
     this.clearState();
-    this.movieService.addMovie(newMovie).then(movie => {
+    this.movieService.addMovie(newMovie).then(res => {
         this.getMovies();
       }
     );
   }
 
-  onDeleteMovie(movieLink) {
+  onDeleteMovie(movieName) {
     this.clearState();
-    this.movieService.deleteMovie(movieLink).then(res => {
+    this.movieService.deleteMovie(movieName).then(res => {
         this.getMovies();
       }
     );

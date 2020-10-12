@@ -50,7 +50,11 @@ class NewMovie extends Component {
   render() {
     return (
       <div className="input-panel">
-      <span className="form-caption">New item:</span>
+      <br/>
+      <br/>
+      <span className="form-caption">New movie:</span>
+      <br/>
+      <br/>
       <div>
         <label className="field-name">Name:<br/>
           <input value={this.state.name} name="name" maxLength="100" required onChange={this.handleInputChange} placeholder="item name" />
