@@ -3,6 +3,9 @@ import React, { Component } from 'react';
 import './App.css';
 import Validator from './validator';
 
+/**
+ * Component for adding a new movie
+ */
 class NewMovie extends Component {
 
   static propTypes = {
@@ -27,6 +30,9 @@ class NewMovie extends Component {
     };
   }
 
+  /**
+   * Handle changes on movie detail fields
+   */
   handleInputChange(event) {
     const target = event.target;
     const value = target.value;
@@ -41,6 +47,9 @@ class NewMovie extends Component {
     this.props.onCancel();
   }
 
+  /**
+   * Submit changes
+   */
   onSubmit() {
     if(this.validator.validateInputs(this.state)) {
         this.props.onSubmit(this.state);

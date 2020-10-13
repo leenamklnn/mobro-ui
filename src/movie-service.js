@@ -1,12 +1,17 @@
 import Configuration from './configuration';
 
+/**
+ * Class for making requests to the backend server
+ */
 class MovieService {
 
   constructor() {
     this.config = new Configuration();
   }
 
-
+  /**
+   * Call backend server to add a new movie
+   */
   addMovie(newMovie) {
     console.log("MovieService.addMovie():");
     console.log(newMovie);
@@ -29,6 +34,9 @@ class MovieService {
       });
   }
 
+  /**
+   * Call backend server to delete a movie
+   */
   deleteMovie(movieName) {
     console.log("MovieService.deleteMovie():");
     console.log(movieName);

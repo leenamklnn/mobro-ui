@@ -4,8 +4,10 @@ import MovieDetails from './movie-details';
 import NewMovie from './new-movie';
 import MovieService from './movie-service';
 import Configuration from './configuration';
-import Movies from './movies';
 
+/**
+ * Main application component
+ */
 class App extends Component {
 
   constructor(props) {
@@ -27,10 +29,16 @@ class App extends Component {
     }
   }
 
+  /**
+   * Load data before rendering
+   */
   componentDidMount() {
       this.getMovies();
   }
 
+  /**
+   * Render the UI
+   */
   render() {
     const showDetails = this.state.showDetails;
     const selectedMovie = this.state.selectedMovie;
@@ -58,6 +66,9 @@ class App extends Component {
     );
   }
 
+  /**
+   * Fetch movies from the backend server
+   */
   getMovies() {
     fetch(this.config.FETCH_MOVIES_URL)
                 .then(res => res.json())
@@ -67,6 +78,9 @@ class App extends Component {
                 .catch(console.log);
   }
 
+  /**
+   * Handle movie selection
+   */
   onSelect(movie) {
       this.clearState();
       this.setState({
@@ -79,6 +93,9 @@ class App extends Component {
     this.clearState();
   }
 
+  /**
+   * Handle state change when new movie component is shown
+   */
   onNewMovie() {
     this.clearState();
     this.setState({
@@ -86,6 +103,9 @@ class App extends Component {
     });
   }
 
+  /**
+   * Handle creating a new movie - call the backend server to add
+   */
   onCreateMovie(newMovie) {
     this.clearState();
     this.movieService.addMovie(newMovie).then(res => {
@@ -94,6 +114,9 @@ class App extends Component {
     );
   }
 
+  /**
+   * Handle movie deletion - call the backend server to remove
+   */
   onDeleteMovie(movieName) {
     this.clearState();
     this.movieService.deleteMovie(movieName).then(res => {

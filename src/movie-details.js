@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import './App.css';
 
+/**
+ * Component for showing movie details
+ */
 class MovieDetails extends Component {
 
   constructor(props) {
